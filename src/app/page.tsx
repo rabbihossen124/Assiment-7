@@ -1,15 +1,14 @@
 import HeroSection from "@/components/home/HeroSection";
+import HomeProductSections from "@/components/home/HomeProductSections";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 pb-16">
-      {/* Hero Banner Section (Requirement 2) */}
+    <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-10 sm:space-y-12">
+      {/* 1. Hero Banner Section */}
       <HeroSection />
 
-      {/* Target Anchor Section for Hero CTA (#সব-পণ্য) */}
-      <div id="সব-পণ্য" className="scroll-mt-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        {/* Product sections will be rendered here in Part 4 */}
-      </div>
+      {/* 2. Main Product Sections: A (দাম বেড়েছে), B (দাম কমেছে), C (সব পণ্য) */}
+      <HomeProductSections />
     </div>
   );
 }

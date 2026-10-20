@@ -27,8 +27,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="bn" className={hindSiliguri.variable}>
-      <body className="min-h-screen flex flex-col font-sans bg-[#f3f8f4] text-[#1a2a1d] antialiased selection:bg-[#07963d] selection:text-white">
+    <html
+      lang="bn"
+      data-theme="light"
+      style={{ colorScheme: "light" }}
+      className={hindSiliguri.variable}
+      suppressHydrationWarning
+    >
+      <head>
+        <meta name="color-scheme" content="light" />
+      </head>
+      <body
+        style={{ colorScheme: "light" }}
+        className="min-h-screen flex flex-col font-sans bg-[#f3f8f4] text-[#1a2a1d] antialiased selection:bg-[#07963d] selection:text-white"
+      >
         <ToastProvider />
         <Navbar />
         <PriceTicker />
