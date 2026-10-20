@@ -3,6 +3,7 @@ import { Hind_Siliguri } from "next/font/google";
 import "./globals.css";
 import ToastProvider from "@/components/providers/ToastProvider";
 import Navbar from "@/components/layout/Navbar";
+import PriceTicker from "@/components/layout/PriceTicker";
 
 const hindSiliguri = Hind_Siliguri({
   subsets: ["bengali", "latin"],
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col font-sans bg-[#FAFAF9] text-gray-900 antialiased selection:bg-emerald-500 selection:text-white">
         <ToastProvider />
         <Navbar />
+        <PriceTicker />
         <main className="flex-1 flex flex-col">{children}</main>
       </body>
     </html>

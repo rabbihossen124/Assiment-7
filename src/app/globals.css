@@ -1,18 +1,40 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fbfbfa;
-  --foreground: #1c1917;
+  --background: #f3f8f4;
+  --foreground: #1a2a1d;
+  --primary-color: #07963d;
+  --primary-hover: #068034;
+  --card-bg: #ffffff;
+  --card-border: #e2ede4;
 }
 
 html {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-hind-siliguri), system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #f3f8f4;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbdcd0;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #07963d;
 }
 
 /* Marquee infinite animation */

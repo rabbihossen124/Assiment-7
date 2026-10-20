@@ -61,6 +61,26 @@ export function formatUnitBn(unit: string): string {
 }
 
 /**
+ * Maps unit identifiers to short Bengali text for tickers (e.g. 'কেজি', 'লিটার')
+ */
+export function formatShortUnitBn(unit: string): string {
+  switch (unit?.toLowerCase()) {
+    case "kg":
+      return "কেজি";
+    case "litre":
+    case "liter":
+      return "লিটার";
+    case "dozen":
+      return "ডজন";
+    case "piece":
+    case "hali":
+      return "পিস";
+    default:
+      return unit || "একক";
+  }
+}
+
+/**
  * Formats current date in Bangla format: e.g. "২০ অক্টোবর ২০২৬"
  */
 export function getTodayBnDate(): string {
