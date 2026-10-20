@@ -1,0 +1,17 @@
+import { Category } from "@/types";
+
+export const CATEGORIES: Category[] = [
+  { id: "all", slug: "", nameBn: "সব পণ্য", icon: "🧺" },
+  { id: "chal", slug: "chal", nameBn: "চাল", icon: "🍚" },
+  { id: "dal", slug: "dal", nameBn: "ডাল", icon: "🫘" },
+  { id: "tel", slug: "tel", nameBn: "তেল", icon: "🛢️" },
+  { id: "sobji", slug: "sobji", nameBn: "সবজি", icon: "🥬" },
+  { id: "mach", slug: "mach", nameBn: "মাছ", icon: "🐟" },
+  { id: "mangsho", slug: "mangsho", nameBn: "মাংস", icon: "🍗" },
+  { id: "dim-dui", slug: "dim-dui", nameBn: "ডিম-দুধ", icon: "🥛" },
+  { id: "mosla", slug: "mosla", nameBn: "মসলা", icon: "🌶️" },
+];
+
+export function getCategoryBySlug(slug: string): Category | undefined {
+  return CATEGORIES.find((c) => c.slug.toLowerCase() === slug.toLowerCase());
+}
