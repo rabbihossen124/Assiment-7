@@ -110,43 +110,6 @@ local-bazar/
 
 ---
 
-## 💻 লোকাল সেটআপ ও রান করার নিয়ম (Getting Started)
-
-### ১. রিপোজিটরি ক্লোন করুন:
-```bash
-git clone https://github.com/rabbihossen124/Assiment-7.git
-cd Assiment-7/local-bazar
-```
-
-### ২. ডিপেন্ডেন্সি ইনস্টল করুন:
-```bash
-npm install
-```
-
-### ৩. এনভায়রনমেন্ট ভেরিয়েবল সেটআপ করুন:
-প্রজেক্টের রুট ফোল্ডারে একটি `.env.local` ফাইল তৈরি করুন এবং নিচের মানগুলো যোগ করুন:
-```env
-MONGODB_URI=your_mongodb_atlas_connection_string
-MONGODB_DB_NAME=Rabbi
-BETTER_AUTH_SECRET=your_super_secret_key_here
-BETTER_AUTH_URL=http://localhost:3000
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-```
-
-### ৪. ডেভেলপমেন্ট সার্ভার চালু করুন:
-```bash
-npm run dev
-```
-ব্রাউজারে [http://localhost:3000](http://localhost:3000) ওপেন করলেই ওয়েবসাইটটি চালু দেখতে পাবেন।
-
-### ৫. প্রোডাকশন বিল্ড তৈরি করুন:
-```bash
-npm run build
-npm start
-```
-
----
-
 ## 👨‍💻 ডেভেলপার পরিচিতি (Author Information)
 
 * **প্রোজেক্ট:** বাজার দর (BazarDor)
