@@ -1,36 +1,156 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛒 বাজার দর (BazarDor) — নিত্যপণ্যের বাজারদর এক নজরে
 
-## Getting Started
+[![Next.js](https://img.shields.io/badge/Next.js-16.4.2-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB_Atlas-Rabbi_DB-47A248?style=for-the-badge&logo=mongodb)](https://www.mongodb.com/)
+[![BetterAuth](https://img.shields.io/badge/Auth-BetterAuth-purple?style=for-the-badge)](https://www.better-auth.com/)
 
-First, run the development server:
+**বাজার দর (BazarDor)** হলো বাংলাদেশের বিভিন্ন পাইকারি ও খুচরা বাজারের নিত্যপ্রয়োজনীয় পণ্যের নির্ভরযোগ্য ও রিয়েল-টাইম বাজারদর যাচাই করার একটি আধুনিক ও পূর্ণাঙ্গ ওয়েব অ্যাপ্লিকেশন। ক্রেতা ও সাধারণ ভোক্তারা যাতে যেকোনো স্থান থেকে বিভিন্ন বাজারের পণ্যের সঠিক দাম, দামের ওঠানামা এবং পরিসংখ্যান যাচাই করতে পারেন, সেই লক্ষ্যেই এটি তৈরি করা হয়েছে।
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 📌 প্রোজেক্টের বিবরণ (Project Overview)
+
+নিত্যপ্রয়োজনীয় পণ্য (যেমন: চাল, ডাল, তেল, সবজি, মাছ, মাংস, মসলা ইত্যাদি)-এর বাজারদর প্রতিদিন ওঠানামা করে। **বাজার দর** প্ল্যাটফর্মের মাধ্যমে ব্যবহারকারীরা:
+* আজকের তাজা বাজারদরের পরিসংখ্যান দেখতে পারবেন।
+* কোন কোন পণ্যের দাম আজ বেড়েছে কিংবা কমেছে তা এক নজরে পর্যবেক্ষণ করতে পারবেন।
+* পণ্যের বিস্তারিত পেজে বিভিন্ন নির্দিষ্ট বাজারের (যেমন: কারওয়ান বাজার, গ্রীন মার্কেট, সদর বাজার ইত্যাদি) সর্বনিম্ন ও সর্বোচ্চ খুচরা মূল্যের তুলনামূলক হিসাব দেখতে পারবেন।
+* একাউন্ট তৈরি করে প্রোফাইলে নিজের নাম ও ছবি আপডেট করতে পারবেন।
+
+---
+
+## 🚀 প্রধান ৫+ টি বৈশিষ্ট্য (Key Features)
+
+### ১. ⚡ লাইভ প্রাইস টিকার (Live Infinite Price Marquee)
+ওয়েবসাইটের ন্যাভবারের নিচে একটি চলমান ইনফিনিট স্ক্রলিং প্রাইস টিকার রয়েছে। এটি সারাক্ষণ পণ্যের ইমোজি, নাম, আজকের মূল্য এবং শতাংশের ভিত্তিতে দামের হ্রাস-বৃদ্ধি প্রদর্শন করে।
+
+### ২. 📈 আজ দাম বেড়েছে ▲ ও আজ দাম কমেছে ▼ (Market Risers & Fallers)
+হোমপেজে স্বয়ংক্রিয়ভাবে শীর্ষ ৬টি মূল্যবৃদ্ধিকারী পণ্য (দাম বেড়েছে ▲) এবং শীর্ষ ৬টি মূল্যহ্রাসকারী পণ্য (দাম কমেছে ▼) আলাদা আকর্ষণীয় সেকশনে ফিল্টার হয়ে প্রদর্শিত হয়।
+
+### ৩. ⚖️ ক্যাটাগরি ব্রাউজিং ও সংখ্যাভিত্তিক সর্টিং (Challenge C1)
+চাল, ডাল, তেল, সবজি, মাছ, মাংস সহ বিভিন্ন ক্যাটাগরি অনুসারে পণ্য ফিল্টার করার সুবিধা। সঙ্গে রয়েছে ড্রপডাউন সর্টিং অপশন:
+* **ডিফল্ট**
+* **দাম: কম থেকে বেশি**
+* **দাম: বেশি থেকে কম**
+*(বাংলা সংখ্যার সঠিক নিউমেরিক ভ্যালু বিশ্লেষণ করে নির্ভুলভাবে সর্ট করা হয়)*
+
+### ৪. 🏪 প্রটেক্টেড প্রোডাক্ট ডিটেইলস ও বাজারভিত্তিক দাম (Protected Route)
+* লগইন ছাড়া কোনো পণ্য দেখতে গেলে স্বয়ংক্রিয়ভাবে টোস্ট মেসেজ সহ লগইন পেজে রিডাইরেক্ট করে।
+* পণ্যের বিস্তারিত পেজে রয়েছে **সর্বনিম্ন দাম**, **গড় দাম** ও **সর্বোচ্চ দাম**-এর সুনির্দিষ্ট কার্ড।
+* বিভিন্ন বিভাগ (ঢাকা, চট্টগ্রাম, রাজশাহী ইত্যাদি) ভিত্তিক বাজারগুলোর সর্বনিম্ন, সর্বোচ্চ ও গড় দামের তুলনামূলক টেবিল ও কার্ড।
+* আগের দিনগুলোর মূল্যের ট্রেন্ড (গতকাল, গত সপ্তাহ, গত মাস)।
+
+### ৫. 🔐 সিকিউর অথেনটিকেশন ও ক্লাউড ডাটাবেস (BetterAuth + MongoDB Atlas)
+* ইমেইল ও পাসওয়ার্ড দিয়ে তাৎক্ষণিক অ্যাকাউন্ট তৈরি ও লগইন।
+* গুগল ও গিটহাব সোশ্যাল অথেনটিকেশন সাপোর্ট।
+* সমস্ত ইউজার, সেশন এবং অ্যাকাউন্ট সরাসরি **MongoDB Atlas** ক্লাস্টারের **`Rabbi`** ডাটাবেসে সংরক্ষিত হয়।
+
+### ৬. 👤 প্রোফাইল ইনফরমেশন ও ছবি আপডেট (Challenge C3)
+* ব্যবহারকারীর নাম ও প্রোফাইল ছবি পরিবর্তনের ডেডিকেটেড পেজ (`/profile/update`)।
+* ব্রাউজারেই HTML Canvas ভিত্তিক অটো-কম্প্রেশন ও অপটিমাইজেশন, যা সেকেন্ডের মধ্যে প্রোফাইল ছবি আপডেট নিশ্চিত করে।
+
+### ৭. 🚫 কাস্টম ফ্রেন্ডলি ৪০৪ পেজ (Custom 404 Page)
+ভুল কোনো ইউআরএলে প্রবেশ করলে সুন্দর গ্রাফিক ব্যাজ, বন্ধুত্বপূর্ণ বাংলা বার্তা এবং **"হোম পেজে ফিরে যান"** বাটন ও জনপ্রিয় ক্যাটাগরি শর্টকাট সহ ৪০৪ পেজ প্রদর্শিত হয়।
+
+### ৮. 📱 ১০০% রেসপনসিভ ও ফিগমা পিক্সেল-পারফেক্ট ডিজাইন
+মোবাইল, ট্যাবলেট এবং ডেস্কটপ সব ডিভাইসেই গ্রিড লেআউট, ন্যাভবার এবং টেবিল স্বয়ংক্রিয়ভাবে নিখুঁতভাবে অ্যাডাপ্ট হয়। ব্যবহার করা হয়েছে গুগল ফন্টের দৃষ্টিনন্দন বাংলা টাইপোগ্রাফি **Hind Siliguri**।
+
+---
+
+## 🛠️ ব্যবহৃত প্রযুক্তিসমূহ (Technologies Used)
+
+| প্রযুক্তি | ব্যবহারের উদ্দেশ্য |
+| :--- | :--- |
+| **Next.js 16.4.2 (App Router)** | আধুনিক ফুলস্ট্যাক রিঅ্যাক্ট ফ্রেমওয়ার্ক ও এসএসআর/এসএসজি হ্যান্ডলিং |
+| **TypeScript** | টাইপ সেফটি ও নির্ভরযোগ্য কোডবেস |
+| **Tailwind CSS v4** | আধুনিক, দ্রুতগতির ও রেসপনসিভ ইউআই স্টাইলিং |
+| **MongoDB Atlas** | ক্লাউড নোএসকিউএল ডাটাবেস (`Rabbi` ডেটাবেস) |
+| **BetterAuth** | আধুনিক, নিরাপদ ও পূর্ণাঙ্গ অথেনটিকেশন সলিউশন |
+| **Lucide React** | প্রফেশনাল ও আধুনিক ভেক্টর আইকন সেট |
+| **React Hot Toast** | রিয়েল-টাইম ইউজার নোটিফিকেশন ও অ্যালার্ট |
+| **Turbopack** | দ্রুততম লোকাল ডেভেলপমেন্ট ও বিল্ড ইঞ্জিন |
+
+---
+
+## 📁 ফোল্ডার স্ট্রাকচার (Project Structure)
+
+```text
+local-bazar/
+├── public/                     # স্ট্যাটিক অ্যাসেট ও লোগো
+│   ├── logo-icon.png
+│   └── bazar-hero.png
+├── src/
+│   ├── app/                    # Next.js App Router পেজ ও এপিআই
+│   │   ├── api/auth/[...all]/  # BetterAuth এপিআই রাউট
+│   │   ├── categories/         # ক্যাটাগরি লিস্ট ও ক্যাটাগরিভিত্তিক পেজ
+│   │   ├── product/[id]/       # প্রোডাক্ট ডিটেইলস অল্টারনেটিভ রুট
+│   │   ├── products/[id]/      # মূল প্রোডাক্ট ডিটেইলস (Protected)
+│   │   ├── profile/            # ইউজার প্রোফাইল ও আপডেট পেজ
+│   │   ├── signin/             # লগইন পেজ
+│   │   ├── signup/             # সাইন-আপ পেজ
+│   │   ├── not-found.tsx       # কাস্টম ৪০৪ পেজ
+│   │   ├── layout.tsx          # গ্লোবাল লেআউট, ফন্ট ও টোস্টার
+│   │   └── page.tsx            # হোম পেজ (হিরো + ৩টি প্রোডাক্ট সেকশন)
+│   ├── components/             # রিইউজেবল কম্পোনেন্টস
+│   │   ├── auth/               # সোশ্যাল অথ মডাল
+│   │   ├── categories/         # ক্যাটাগরি ভিউ ও সর্টিং
+│   │   ├── home/               # হিরো ব্যানার ও সেকশনস
+│   │   ├── layout/             # ন্যাভবার, প্রাইস টিকার ও ফুটার
+│   │   └── products/           # প্রোডাক্ট কার্ড ও ডিটেইলস ভিউ
+│   ├── lib/                    # কোর ইউটিলিটি, অথ ও ডাটাবেস লজিক
+│   │   ├── api.ts              # ওপেন এপিআই ফেচ ও ক্যাশিং
+│   │   ├── auth.ts             # BetterAuth সার্ভার কনফিগারেশন
+│   │   ├── auth-client.ts      # BetterAuth ক্লায়েন্ট কনফিগারেশন
+│   │   ├── mongodb.ts          # MongoDB Atlas কানেকশন পুল
+│   │   └── utils.ts            # বাংলা সংখ্যা, তারিখ ও মূল্য ফরম্যাটিং
+│   └── types/                  # টাইপস্ক্রিপ্ট টাইপ ডেফিনিশন
+└── package.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 💻 লোকাল সেটআপ ও রান করার নিয়ম (Getting Started)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### ১. রিপোজিটরি ক্লোন করুন:
+```bash
+git clone https://github.com/rabbihossen124/Assiment-7.git
+cd Assiment-7/local-bazar
+```
 
-## Learn More
+### ২. ডিপেন্ডেন্সি ইনস্টল করুন:
+```bash
+npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+### ৩. এনভায়রনমেন্ট ভেরিয়েবল সেটআপ করুন:
+প্রজেক্টের রুট ফোল্ডারে একটি `.env.local` ফাইল তৈরি করুন এবং নিচের মানগুলো যোগ করুন:
+```env
+MONGODB_URI=your_mongodb_atlas_connection_string
+MONGODB_DB_NAME=Rabbi
+BETTER_AUTH_SECRET=your_super_secret_key_here
+BETTER_AUTH_URL=http://localhost:3000
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### ৪. ডেভেলপমেন্ট সার্ভার চালু করুন:
+```bash
+npm run dev
+```
+ব্রাউজারে [http://localhost:3000](http://localhost:3000) ওপেন করলেই ওয়েবসাইটটি চালু দেখতে পাবেন।
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### ৫. প্রোডাকশন বিল্ড তৈরি করুন:
+```bash
+npm run build
+npm start
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 👨‍💻 ডেভেলপার পরিচিতি (Author Information)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* **প্রোজেক্ট:** বাজার দর (BazarDor)
+* **কোর্স:** Programming Hero (Batch 14)
+* **অ্যাসাইনমেন্ট:** Assignment 7 (B14-A7-Bazar Dor)
+* **ডেভেলপার:** মো: রাব্বি হোসেন ([@rabbihossen124](https://github.com/rabbihossen124))
+* **গিটহাব রিপোজিটরি:** [Assiment-7](https://github.com/rabbihossen124/Assiment-7)
