@@ -1,16 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { Mail, Lock, LogIn, ArrowRight, Loader2 } from "lucide-react";
 import { signIn } from "@/lib/auth-client";
 import SocialAuthModal from "@/components/auth/SocialAuthModal";
 
-export default function SignInPage() {
+function SignInForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTarget = searchParams.get("redirect") || "/";
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -43,7 +46,7 @@ export default function SignInPage() {
       }
 
       toast.success("সফলভাবে লগইন হয়েছে! স্বাগতম।");
-      router.push("/");
+      router.push(redirectTarget);
       router.refresh();
     } catch (err: unknown) {
       console.error("Sign in error:", err);
@@ -117,9 +120,11 @@ export default function SignInPage() {
 
             {/* Password Field */}
             <div className="space-y-1.5">
-              <label htmlFor="password" className="block text-xs sm:text-sm font-semibold text-[#374151]">
-                পাসওয়ার্ড
-              </label>
+              <div className="flex items-center justify-between">
+                <label htmlFor="password" className="block text-xs sm:text-sm font-semibold text-[#374151]">
+                  পাসওয়ার্ড
+                </label>
+              </div>
               <div className="relative">
                 <Lock className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input
@@ -135,41 +140,38 @@ export default function SignInPage() {
             </div>
 
             {/* Submit Button */}
-            <div className="pt-2">
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full flex items-center justify-center gap-2 px-6 py-2.5 sm:py-3 rounded-xl bg-[#07963d] hover:bg-[#068034] active:bg-[#056d2c] disabled:opacity-70 text-white text-sm sm:text-base font-semibold shadow-xs hover:shadow transition-all cursor-pointer"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>লগইন হচ্ছে...</span>
-                  </>
-                ) : (
-                  <>
-                    <LogIn className="w-4 h-4" />
-                    <span>লগইন করুন</span>
-                  </>
-                )}
-              </button>
-            </div>
-
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3 px-4 rounded-xl bg-[#07963d] hover:bg-[#068034] text-white font-semibold text-sm sm:text-base flex items-center justify-center gap-2 shadow-xs hover:shadow transition-all disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span>যাচাই করা হচ্ছে...</span>
+                </>
+              ) : (
+                <>
+                  <LogIn className="w-4 h-4" />
+                  <span>লগইন করুন</span>
+                </>
+              )}
+            </button>
           </form>
 
-          {/* Social Login Divider */}
+          {/* Social Logins Divider */}
           <div className="relative flex items-center justify-center">
-            <div className="w-full border-t border-gray-200" />
-            <span className="bg-white px-3 text-xs text-gray-400 uppercase tracking-wider font-medium">
-              অথবা
+            <div className="border-t border-gray-200 w-full"></div>
+            <span className="bg-white px-3 text-xs text-gray-400 font-medium uppercase tracking-wider relative shrink-0">
+              অথবা সোশ্যাল লগইন
             </span>
+            <div className="border-t border-gray-200 w-full"></div>
           </div>
 
-          {/* Social Login Buttons (Google / GitHub) */}
+          {/* Google & GitHub Buttons */}
           <div className="grid grid-cols-2 gap-3">
             <button
               type="button"
-              disabled={loading}
               onClick={() => setModalProvider("google")}
               className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50/80 text-xs sm:text-sm font-semibold text-[#374151] transition-all cursor-pointer shadow-2xs"
             >
@@ -196,7 +198,6 @@ export default function SignInPage() {
 
             <button
               type="button"
-              disabled={loading}
               onClick={() => setModalProvider("github")}
               className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50/80 text-xs sm:text-sm font-semibold text-[#374151] transition-all cursor-pointer shadow-2xs"
             >
@@ -231,11 +232,19 @@ export default function SignInPage() {
           onClose={() => setModalProvider(null)}
           onSuccess={() => {
             setModalProvider(null);
-            router.push("/");
+            router.push(redirectTarget);
             router.refresh();
           }}
         />
       )}
     </div>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense fallback={null}>
+      <SignInForm />
+    </Suspense>
   );
 }

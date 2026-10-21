@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Hind_Siliguri } from "next/font/google";
 import "./globals.css";
 import ToastProvider from "@/components/providers/ToastProvider";
@@ -42,7 +43,9 @@ export default function RootLayout({
         className="min-h-screen flex flex-col font-sans bg-[#f3f8f4] text-[#1a2a1d] antialiased selection:bg-[#07963d] selection:text-white"
       >
         <ToastProvider />
-        <Navbar />
+        <Suspense fallback={null}>
+          <Navbar />
+        </Suspense>
         <PriceTicker />
         <main className="flex-1 flex flex-col">{children}</main>
         <Footer />

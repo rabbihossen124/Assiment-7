@@ -1,6 +1,9 @@
 import { Metadata } from "next";
+import { Suspense } from "react";
 import { CATEGORIES, getCategoryBySlug } from "@/lib/constants";
 import CategoryView from "@/components/categories/CategoryView";
+
+export const instant = false;
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -23,7 +26,15 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function CategoryPage({ params }: PageProps) {
+async function CategoryPageContent({ params }: PageProps) {
   const { slug } = await params;
   return <CategoryView slug={slug} />;
+}
+
+export default function CategoryPage({ params }: PageProps) {
+  return (
+    <Suspense fallback={null}>
+      <CategoryPageContent params={params} />
+    </Suspense>
+  );
 }
