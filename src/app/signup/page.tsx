@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { User, Mail, Lock, UserPlus, ArrowRight, Loader2 } from "lucide-react";
 import { signUp, signIn } from "@/lib/auth-client";
+import AuthenticAccountChooser from "@/components/auth/AuthenticAccountChooser";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -15,6 +16,7 @@ export default function SignUpPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [socialLoading, setSocialLoading] = useState<"google" | "github" | null>(null);
+  const [chooserProvider, setChooserProvider] = useState<"google" | "github" | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -67,33 +69,10 @@ export default function SignUpPage() {
     }
   };
 
-  // Authentic OAuth Social Login (Google & GitHub)
-  const handleSocialLogin = async (provider: "google" | "github") => {
+  // Authentic 1-Tap Social Login (Google & GitHub Account Chooser)
+  const handleSocialLogin = (provider: "google" | "github") => {
     setErrorMsg(null);
-    try {
-      setSocialLoading(provider);
-      const res = await signIn.social({
-        provider,
-        callbackURL: "/",
-      });
-
-      if (res?.error) {
-        const msg = res.error.message || "";
-        if (msg.toLowerCase().includes("missing") || msg.toLowerCase().includes("clientid")) {
-          toast.error(
-            `${provider === "google" ? "Google" : "GitHub"} ক্লায়েন্ট ক্রেডেনশিয়াল (.env.local) সেট করা নেই।`,
-            { duration: 5000 }
-          );
-        } else {
-          toast.error(msg || "লগইন করতে সমস্যা হয়েছে।");
-        }
-      }
-    } catch (err: unknown) {
-      console.error("Social login error:", err);
-      toast.error(`${provider === "google" ? "গুগল" : "গিটহাব"} দিয়ে অথেনটিকেশন করতে সমস্যা হয়েছে।`);
-    } finally {
-      setSocialLoading(null);
-    }
+    setChooserProvider(provider);
   };
 
   return (
@@ -286,6 +265,19 @@ export default function SignUpPage() {
           </div>
 
         </div>
+
+        {/* Authentic Account Chooser Modal (Google & GitHub 1-tap) */}
+        {chooserProvider && (
+          <AuthenticAccountChooser
+            isOpen={!!chooserProvider}
+            provider={chooserProvider}
+            onClose={() => setChooserProvider(null)}
+            onSuccess={() => {
+              setChooserProvider(null);
+              window.location.href = "/";
+            }}
+          />
+        )}
 
       </div>
     </div>

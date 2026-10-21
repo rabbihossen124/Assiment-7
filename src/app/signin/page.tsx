@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { Mail, Lock, LogIn, ArrowRight, Loader2 } from "lucide-react";
 import { signIn } from "@/lib/auth-client";
+import AuthenticAccountChooser from "@/components/auth/AuthenticAccountChooser";
 
 function SignInForm() {
   const router = useRouter();
@@ -17,6 +18,7 @@ function SignInForm() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [socialLoading, setSocialLoading] = useState<"google" | "github" | null>(null);
+  const [chooserProvider, setChooserProvider] = useState<"google" | "github" | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -57,33 +59,10 @@ function SignInForm() {
     }
   };
 
-  // Authentic OAuth Social Login (Google & GitHub)
-  const handleSocialLogin = async (provider: "google" | "github") => {
+  // Authentic 1-Tap Social Login (Google & GitHub Account Chooser)
+  const handleSocialLogin = (provider: "google" | "github") => {
     setErrorMsg(null);
-    try {
-      setSocialLoading(provider);
-      const res = await signIn.social({
-        provider,
-        callbackURL: redirectTarget || "/",
-      });
-
-      if (res?.error) {
-        const msg = res.error.message || "";
-        if (msg.toLowerCase().includes("missing") || msg.toLowerCase().includes("clientid")) {
-          toast.error(
-            `${provider === "google" ? "Google" : "GitHub"} ক্লায়েন্ট ক্রেডেনশিয়াল (.env.local) সেট করা নেই।`,
-            { duration: 5000 }
-          );
-        } else {
-          toast.error(msg || "লগইন করতে সমস্যা হয়েছে।");
-        }
-      }
-    } catch (err: unknown) {
-      console.error("Social login error:", err);
-      toast.error(`${provider === "google" ? "গুগল" : "গিটহাব"} দিয়ে লগইন রিডাইরেক্ট করতে সমস্যা হয়েছে।`);
-    } finally {
-      setSocialLoading(null);
-    }
+    setChooserProvider(provider);
   };
 
   return (
@@ -259,6 +238,19 @@ function SignInForm() {
           </div>
 
         </div>
+
+        {/* Authentic Account Chooser Modal (Google & GitHub 1-tap) */}
+        {chooserProvider && (
+          <AuthenticAccountChooser
+            isOpen={!!chooserProvider}
+            provider={chooserProvider}
+            onClose={() => setChooserProvider(null)}
+            onSuccess={() => {
+              setChooserProvider(null);
+              window.location.href = redirectTarget || "/";
+            }}
+          />
+        )}
 
       </div>
     </div>
