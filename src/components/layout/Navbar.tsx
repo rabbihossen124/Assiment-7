@@ -4,18 +4,32 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, LogIn, UserPlus } from "lucide-react";
+import { Menu, X, LogIn, UserPlus, LogOut, User as UserIcon } from "lucide-react";
+import { toast } from "react-hot-toast";
 import { getTodayBnDate } from "@/lib/utils";
 import { CATEGORIES } from "@/lib/constants";
+import { useSession, signOut } from "@/lib/auth-client";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentDate, setCurrentDate] = useState<string>("");
+  const { data: session } = useSession();
 
   useEffect(() => {
     setCurrentDate(getTodayBnDate());
   }, []);
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      toast.success("সফলভাবে সাইন আউট হয়েছে।");
+      setMobileMenuOpen(false);
+    } catch (err) {
+      console.error("Sign out error:", err);
+      toast.error("সাইন আউট করতে সমস্যা হয়েছে।");
+    }
+  };
 
   const isActiveCategory = (slug: string) => {
     if (slug === "") {
@@ -67,20 +81,55 @@ export default function Navbar() {
 
           {/* Right: Auth Action Buttons */}
           <div className="hidden sm:flex items-center gap-3">
-            <Link
-              href="/signin"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium text-[#203323] hover:text-[#07963d] bg-white border border-[#d6e5d9] hover:border-[#07963d] hover:bg-[#f7fbf8] shadow-sm transition-all duration-150"
-            >
-              <LogIn className="w-4 h-4 text-[#07963d]" />
-              <span>সাইন ইন</span>
-            </Link>
-            <Link
-              href="/signup"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold text-white bg-[#07963d] hover:bg-[#068034] active:bg-[#056b2b] shadow-sm hover:shadow transition-all duration-150"
-            >
-              <UserPlus className="w-4 h-4" />
-              <span>সাইন আপ</span>
-            </Link>
+            {session?.user ? (
+              <div className="flex items-center gap-3">
+                <Link
+                  href="/profile"
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-medium text-[#203323] hover:text-[#07963d] bg-[#f8fbf8] border border-[#d6e5d9] transition-all"
+                >
+                  <div className="w-6 h-6 rounded-full bg-[#07963d]/10 text-[#07963d] flex items-center justify-center font-bold text-xs overflow-hidden ring-1 ring-[#07963d]/20">
+                    {session.user.image ? (
+                      <img
+                        src={session.user.image}
+                        alt={session.user.name || "প্রোফাইল ছবি"}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : session.user.name ? (
+                      session.user.name.charAt(0).toUpperCase()
+                    ) : (
+                      <UserIcon className="w-3.5 h-3.5" />
+                    )}
+                  </div>
+                  <span className="max-w-[120px] truncate">{session.user.name || "প্রোফাইল"}</span>
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-rose-600 hover:text-rose-700 bg-rose-50 hover:bg-rose-100/80 border border-rose-200 transition-all cursor-pointer"
+                  aria-label="লগআউট"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>সাইন আউট</span>
+                </button>
+              </div>
+            ) : (
+              <>
+                <Link
+                  href="/signin"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium text-[#203323] hover:text-[#07963d] bg-white border border-[#d6e5d9] hover:border-[#07963d] hover:bg-[#f7fbf8] shadow-sm transition-all duration-150"
+                >
+                  <LogIn className="w-4 h-4 text-[#07963d]" />
+                  <span>সাইন ইন</span>
+                </Link>
+                <Link
+                  href="/signup"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold text-white bg-[#07963d] hover:bg-[#068034] active:bg-[#056b2b] shadow-sm hover:shadow transition-all duration-150"
+                >
+                  <UserPlus className="w-4 h-4" />
+                  <span>সাইন আপ</span>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Toggle Button */}
@@ -159,22 +208,55 @@ export default function Navbar() {
           </div>
 
           <div className="pt-2 border-t border-[#e2ede4] flex flex-col gap-2">
-            <Link
-              href="/signin"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-[#203323] bg-[#f8fbf8] hover:bg-[#eef6f0] border border-[#d6e5d9]"
-            >
-              <LogIn className="w-4 h-4 text-[#07963d]" />
-              <span>সাইন ইন</span>
-            </Link>
-            <Link
-              href="/signup"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-[#07963d] hover:bg-[#068034] text-center"
-            >
-              <UserPlus className="w-4 h-4" />
-              <span>সাইন আপ</span>
-            </Link>
+            {session?.user ? (
+              <>
+                <Link
+                  href="/profile"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-[#203323] bg-[#f8fbf8] border border-[#d6e5d9]"
+                >
+                  <div className="w-5 h-5 rounded-full bg-[#07963d]/10 text-[#07963d] flex items-center justify-center font-bold text-[10px] overflow-hidden ring-1 ring-[#07963d]/20 shrink-0">
+                    {session.user.image ? (
+                      <img
+                        src={session.user.image}
+                        alt={session.user.name || "প্রোফাইল ছবি"}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <UserIcon className="w-3.5 h-3.5 text-[#07963d]" />
+                    )}
+                  </div>
+                  <span>{session.user.name || "প্রোফাইল"}</span>
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-rose-600 hover:bg-rose-700 text-center"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>সাইন আউট</span>
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/signin"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-[#203323] bg-[#f8fbf8] hover:bg-[#eef6f0] border border-[#d6e5d9]"
+                >
+                  <LogIn className="w-4 h-4 text-[#07963d]" />
+                  <span>সাইন ইন</span>
+                </Link>
+                <Link
+                  href="/signup"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-[#07963d] hover:bg-[#068034] text-center"
+                >
+                  <UserPlus className="w-4 h-4" />
+                  <span>সাইন আপ</span>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}
